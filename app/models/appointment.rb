@@ -49,18 +49,6 @@ class Appointment < ApplicationRecord
       )
   }
 
-  # For follow ups, can only be canceled or rescheduled close to the date.
-  def can_cancel_and_reschedule?
-    return true unless follow_up_for_dose
-
-    Time.zone.now > can_change_after
-  end
-
-  # Patients can only cancel or reschedule after the date of next scheduled dose
-  def can_change_after
-    start
-  end
-
   def in_allowed_check_in_window?
     start > Time.zone.now.beginning_of_day && start < Time.zone.now.end_of_day
   end

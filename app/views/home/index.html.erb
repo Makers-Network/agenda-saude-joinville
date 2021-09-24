@@ -2,7 +2,7 @@
 
 <div class="card mt-3">
   <h5 class="card-header text-center">
-    Status do agendamento: &nbsp;
+    Status do agendamento para primeira dose: &nbsp;
     <% if @appointments_any %>
       <i class="fa fa-check-circle color-green" aria-hidden="true"></i>
       Disponível
@@ -42,6 +42,45 @@
           </p>
         </li>
       <% end -%>
+    <% end -%>
+  </ul>
+</div>
+
+<div class="card mt-3">
+  <h5 class="card-header text-center">
+    Status para reagendamento da segunda dose: &nbsp;
+    <% if @reschedule_appointments.count.positive? %>
+      <i class="fa fa-check-circle color-green" aria-hidden="true"></i>
+      Disponível
+    <% else %>
+      <i class="fa fa-circle color-red" aria-hidden="true"></i> Não disponível, aguardando novas doses
+    <% end %>
+  </h5>
+
+  <ul class="list-group list-group-flush">
+    <% if @reschedule_appointments.empty? -%>
+      <li class="list-group-item text-center">
+        <h5 class="card-title">
+          Nenhuma vaga liberada para reagendamento da segunda dose neste momento
+        </h5>
+      </li>
+    <% else -%>
+      <li class="list-group-item">
+      <h5 class="card-title">
+        <i class="fa fa-check-circle <%= @reschedule_appointments.count.positive? ? 'color-green' : 'color-goldenrod' %>" aria-hidden="true"></i> 
+        Pessoas que podem reagendar sua segunda dose
+      </h5>
+      <h6 class="card-subtitle mb-2">
+        <% if @reschedule_appointments.count.positive? -%>
+          Até <%= @reschedule_appointments.count %> reagendamentos disponíveis
+        <% else -%>
+          Nenhum reagendamento disponível no momento, tente novamente mais tarde
+        <% end -%>
+      </h6>
+      <p class="card-text small text-muted">
+        Disponível nas unidades:
+        <%= @reschedule_ubs_names %>
+      </p>
     <% end -%>
   </ul>
 </div>
